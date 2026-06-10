@@ -297,7 +297,7 @@
           "value": "1GNoji0t_7iKlt49Edch3VccGCF5DKFh0",
           "mode": "id"
         },
-        "binaryPropertyName": "anhCuaBan",
+        "inputDataFieldName": "anhCuaBan",
         "options": {}
       },
       "credentials": {
@@ -449,7 +449,7 @@
           "value": "1Xnr2x24WNq7S8o_4FrKR2rcU4vFvhDGP",
           "mode": "id"
         },
-        "binaryPropertyName": "posterBinary",
+        "inputDataFieldName": "posterBinary",
         "options": {}
       },
       "credentials": {
