@@ -212,7 +212,7 @@
       "position": [1100, 300],
       "parameters": {
         "mode": "runOnceForAllItems",
-        "jsCode": "const allItems = $input.all();\n\n// Tìm submission đã COMPLETED hoặc email đã gửi\nconst found = allItems.find(item =>\n  item.json?.['Status'] === 'COMPLETED' ||\n  item.json?.['Email Sent'] === 'TRUE'\n);\n\n// Lấy context từ item đầu tiên có dữ liệu của submission này\n// (item.json có thể là row từ Sheets, hoặc empty nếu không tìm thấy)\nconst ctx = allItems[0]?.json || {};\n\nreturn [{\n  json: {\n    ...ctx,\n    isDuplicate: !!found\n  },\n  binary: allItems[0]?.binary || {}\n}];"
+        "jsCode": "const allItems = $input.all();\n\n// Lấy lại binary và context từ node Normalize (trước khi Sheets làm mất binary)\nconst normalizedItem = $('Code: Normalize + Build Prompt').first();\n\n// Tìm submission đã COMPLETED hoặc email đã gửi\nconst found = allItems.find(item =>\n  item.json?.['Status'] === 'COMPLETED' ||\n  item.json?.['Email Sent'] === 'TRUE'\n);\n\nreturn [{\n  json: {\n    ...normalizedItem.json,\n    isDuplicate: !!found\n  },\n  binary: normalizedItem.binary || {}\n}];"
       }
     },
 
