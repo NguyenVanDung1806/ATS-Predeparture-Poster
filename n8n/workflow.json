@@ -487,7 +487,17 @@
         "subject": "=[ATS] Poster du học của {{ $json.name }} đã sẵn sàng",
         "emailType": "html",
         "message": "=<p>Xin chào {{ $json.name }},</p><p>{{ $json.congratsMessage }}</p><p>Poster của bạn đã được đính kèm trong email này. Bạn có thể tải về và chia sẻ lên mạng xã hội.</p><p>Trân trọng,<br/>ATS Education</p>",
-        "attachments": "=[ { \"content\": \"{{ $binary.posterBinary.data }}\", \"filename\": \"poster-{{ $json.name }}.png\", \"type\": \"image/png\", \"disposition\": \"attachment\" } ]"
+        "attachments": {
+          "values": [
+            {
+              "binaryData": true,
+              "binaryPropertyName": "posterBinary",
+              "filename": "={{ 'poster-' + $json.name + '.png' }}",
+              "type": "image/png",
+              "disposition": "attachment"
+            }
+          ]
+        }
       },
       "credentials": {
         "sendGridApi": {
