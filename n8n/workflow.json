@@ -136,8 +136,8 @@
         },
         "sheetName": {
           "__rl": true,
-          "value": "Log",
-          "mode": "name"
+          "value": "0",
+          "mode": "id"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -181,8 +181,8 @@
         },
         "sheetName": {
           "__rl": true,
-          "value": "Log",
-          "mode": "name"
+          "value": "0",
+          "mode": "id"
         },
         "filtersUI": {
           "values": [
@@ -257,8 +257,8 @@
         },
         "sheetName": {
           "__rl": true,
-          "value": "Log",
-          "mode": "name"
+          "value": "0",
+          "mode": "id"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -406,8 +406,8 @@
         },
         "sheetName": {
           "__rl": true,
-          "value": "Log",
-          "mode": "name"
+          "value": "0",
+          "mode": "id"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -500,8 +500,8 @@
         },
         "sheetName": {
           "__rl": true,
-          "value": "Log",
-          "mode": "name"
+          "value": "0",
+          "mode": "id"
         },
         "columns": {
           "mappingMode": "defineBelow",
