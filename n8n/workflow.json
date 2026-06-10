@@ -309,6 +309,18 @@
     },
 
     {
+      "id": "node-restore-binary",
+      "name": "Code: Restore Binary After Drive",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1610, 300],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const item = $input.item;\nconst normalizedItem = $('Code: Normalize + Build Prompt').first();\n\nreturn {\n  json: { ...normalizedItem.json },\n  binary: {\n    anhCuaBan: normalizedItem.binary?.anhCuaBan\n  }\n};"
+      }
+    },
+
+    {
       "id": "node-openai",
       "name": "HTTP: OpenAI Image Edit",
       "type": "n8n-nodes-base.httpRequest",
@@ -580,6 +592,11 @@
       ]
     },
     "Drive: Upload Original Image": {
+      "main": [
+        [{ "node": "Code: Restore Binary After Drive", "type": "main", "index": 0 }]
+      ]
+    },
+    "Code: Restore Binary After Drive": {
       "main": [
         [{ "node": "HTTP: OpenAI Image Edit", "type": "main", "index": 0 }]
       ]
