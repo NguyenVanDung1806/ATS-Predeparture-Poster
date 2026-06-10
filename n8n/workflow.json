@@ -322,15 +322,7 @@
         "url": "https://api.openai.com/v1/images/edits",
         "authentication": "genericCredentialType",
         "genericAuthType": "httpHeaderAuth",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "=Bearer {{ $env.OPENAI_API_KEY }}"
-            }
-          ]
-        },
+        "sendHeaders": false,
         "sendBody": true,
         "contentType": "multipart-form-data",
         "bodyParameters": {
@@ -351,6 +343,12 @@
           "response": {
             "response": { "fullResponse": false }
           }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "openai-header-cred",
+          "name": "OpenAI"
         }
       }
     },
