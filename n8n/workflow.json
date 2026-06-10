@@ -1,0 +1,641 @@
+{
+  "name": "ATS Pre-departure Poster",
+  "nodes": [
+    {
+      "id": "node-webhook",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "predeparture",
+        "responseMode": "onReceived",
+        "responseCode": 202,
+        "options": {}
+      },
+      "webhookId": "ats-predeparture"
+    },
+
+    {
+      "id": "node-normalize",
+      "name": "Code: Normalize + Build Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const item = $input.item;\nconst body = item.json.body || {};\n\nconst clean = (value, max = 200) =>\n  String(value || '')\n    .trim()\n    .replace(/\\s+/g, ' ')\n    .slice(0, max);\n\nconst name         = clean(body.ten, 80);\nconst email        = clean(body.email, 120).toLowerCase();\nconst university   = clean(body.truong, 120);\nconst country      = clean(body.quocgia, 60);\nconst interests    = clean(body.soThich, 180) || 'học tập và khám phá văn hóa mới';\nconst consent      = body.consent === 'on' || body.consent === 'true' || body.consent === true;\nconst eventId      = clean(body.eventId, 80);\nconst submissionId = clean(body.submissionId, 80);\nconst shortName    = name ? name.split(' ').pop() : 'bạn';\n\nconst prompt = `Create a polished study-abroad celebration poster for ATS Education.\n\nUse the uploaded photo as the main subject. Preserve the student's face, identity, age impression, and natural appearance. Do not invent a different person.\n\nStudent details:\n- Name: ${name}\n- University: ${university}\n- Destination country: ${country}\n- Personal interests: ${interests}\n\nDesign requirements:\n- Format: vertical social poster, 1024x1536.\n- Visual style: modern, energetic, premium education-event design.\n- Brand colors: navy blue #003087, gold #FFB81C, white accents.\n- Main subject: the uploaded student photo, smiling or confident, centered.\n- Background: recognizable but tasteful scenery or landmark associated with ${country}.\n- Text overlay: \"${name}\" as the primary title.\n- Text overlay: \"${university}\" as secondary text.\n- Branding: subtle \"ATS Education\" text/logo area in the top-right.\n- Decorative elements: graduation cap, stars, travel/study-abroad accents, light confetti.\n- Keep all text legible. Avoid misspelling the student's name and university.\n- No extra people, no fake logos of the university, no distorted face, no inappropriate content.`.trim();\n\nconst congratsByCountry = {\n  Australia:       `Chúc ${shortName} có một hành trình tuyệt vời tại Australia! ATS Education luôn đồng hành cùng bạn trên chặng đường mới.`,\n  Canada:          `Chúc ${shortName} bắt đầu hành trình tại Canada với thật nhiều năng lượng, trải nghiệm đẹp và cơ hội mới.`,\n  'United States': `Chúc ${shortName} chinh phục hành trình học tập tại Mỹ thật trọn vẹn. ATS Education tin bạn sẽ tạo nên nhiều dấu ấn đáng tự hào.`,\n  'United Kingdom':`Chúc ${shortName} có những năm tháng học tập đáng nhớ tại Vương quốc Anh. ATS Education luôn sẵn sàng đồng hành khi bạn cần.`,\n  'New Zealand':   `Chúc ${shortName} tận hưởng hành trình học tập tại New Zealand với thật nhiều trải nghiệm đáng nhớ.`\n};\n\nconst congratsMessage =\n  congratsByCountry[country] ||\n  `Chúc ${shortName} có một hành trình du học thật ý nghĩa. ATS Education tự hào đồng hành cùng ước mơ của bạn.`;\n\nreturn {\n  json: {\n    ...item.json,\n    name,\n    email,\n    university,\n    country,\n    interests,\n    consent,\n    eventId,\n    submissionId,\n    prompt,\n    congratsMessage,\n    status: 'NORMALIZED'\n  },\n  binary: item.binary\n};"
+      }
+    },
+
+    {
+      "id": "node-validate",
+      "name": "IF: Validate Required Fields",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cond-name",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "cond-email",
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "cond-university",
+              "leftValue": "={{ $json.university }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "cond-country",
+              "leftValue": "={{ $json.country }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "cond-consent",
+              "leftValue": "={{ $json.consent }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equals" }
+            },
+            {
+              "id": "cond-eventid",
+              "leftValue": "={{ $json.eventId }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "cond-submissionid",
+              "leftValue": "={{ $json.submissionId }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "cond-file",
+              "leftValue": "={{ $binary.anhCuaBan !== undefined }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equals" }
+            }
+          ]
+        }
+      }
+    },
+
+    {
+      "id": "node-log-validation-failed",
+      "name": "Sheets: Log VALIDATION_FAILED",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [900, 500],
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.SHEETS_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Log",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ $now.toISO() }}",
+            "Event ID": "={{ $json.eventId }}",
+            "Submission ID": "={{ $json.submissionId }}",
+            "Ten": "={{ $json.name }}",
+            "Email": "={{ $json.email }}",
+            "Truong": "={{ $json.university }}",
+            "Quoc gia": "={{ $json.country }}",
+            "Status": "VALIDATION_FAILED",
+            "Email Sent": "FALSE",
+            "Error Code": "MISSING_REQUIRED_FIELD"
+          },
+          "matchingColumns": [],
+          "schema": []
+        }
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "google-sheets-cred",
+          "name": "Google Sheets"
+        }
+      }
+    },
+
+    {
+      "id": "node-check-duplicate",
+      "name": "Sheets: Check Duplicate",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [900, 300],
+      "alwaysOutputData": true,
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.SHEETS_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Log",
+          "mode": "name"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Submission ID",
+              "lookupValue": "={{ $json.submissionId }}"
+            }
+          ]
+        },
+        "options": {
+          "returnAllMatches": true
+        }
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "google-sheets-cred",
+          "name": "Google Sheets"
+        }
+      }
+    },
+
+    {
+      "id": "node-code-check-dup",
+      "name": "Code: Is Duplicate?",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1100, 300],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "const allItems = $input.all();\n\n// Tìm submission đã COMPLETED hoặc email đã gửi\nconst found = allItems.find(item =>\n  item.json?.['Status'] === 'COMPLETED' ||\n  item.json?.['Email Sent'] === 'TRUE'\n);\n\n// Lấy context từ item đầu tiên có dữ liệu của submission này\n// (item.json có thể là row từ Sheets, hoặc empty nếu không tìm thấy)\nconst ctx = allItems[0]?.json || {};\n\nreturn [{\n  json: {\n    ...ctx,\n    isDuplicate: !!found\n  },\n  binary: allItems[0]?.binary || {}\n}];"
+      }
+    },
+
+    {
+      "id": "node-if-duplicate",
+      "name": "IF: Is Duplicate",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1300, 300],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cond-dup",
+              "leftValue": "={{ $json.isDuplicate }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equals" }
+            }
+          ]
+        }
+      }
+    },
+
+    {
+      "id": "node-log-skipped",
+      "name": "Sheets: Log SKIPPED_DUPLICATE",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [1500, 500],
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.SHEETS_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Log",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ $now.toISO() }}",
+            "Event ID": "={{ $json.eventId }}",
+            "Submission ID": "={{ $json.submissionId }}",
+            "Ten": "={{ $json.name }}",
+            "Email": "={{ $json.email }}",
+            "Status": "SKIPPED_DUPLICATE",
+            "Email Sent": "FALSE"
+          },
+          "matchingColumns": [],
+          "schema": []
+        }
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "google-sheets-cred",
+          "name": "Google Sheets"
+        }
+      }
+    },
+
+    {
+      "id": "node-upload-original",
+      "name": "Drive: Upload Original Image",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [1500, 300],
+      "parameters": {
+        "operation": "upload",
+        "name": "=original_{{ $json.eventId }}_{{ $json.submissionId }}_{{ $json.email }}.jpg",
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $env.DRIVE_ORIGINALS_FOLDER_ID }}",
+          "mode": "id"
+        },
+        "binaryPropertyName": "anhCuaBan",
+        "options": {}
+      },
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "google-drive-cred",
+          "name": "Google Drive"
+        }
+      }
+    },
+
+    {
+      "id": "node-openai",
+      "name": "HTTP: OpenAI Image Edit",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [1720, 300],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 12000,
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/edits",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.OPENAI_API_KEY }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            { "name": "model", "value": "gpt-image-1" },
+            { "name": "prompt", "value": "={{ $json.prompt }}" },
+            { "name": "n", "value": "1" },
+            { "name": "size", "value": "1024x1536" },
+            {
+              "name": "image",
+              "parameterType": "formBinaryData",
+              "inputDataFieldName": "anhCuaBan"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 120000,
+          "response": {
+            "response": { "fullResponse": false }
+          }
+        }
+      }
+    },
+
+    {
+      "id": "node-convert-b64",
+      "name": "Code: Convert Base64 to Binary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1940, 300],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const item = $input.item;\nconst b64 = item.json?.data?.[0]?.b64_json;\n\nif (!b64) {\n  return {\n    json: { ...item.json, hasPoster: false },\n    binary: item.binary || {}\n  };\n}\n\nconst eventId      = item.json.eventId      || 'unknown';\nconst submissionId = item.json.submissionId || 'unknown';\n\nreturn {\n  json: { ...item.json, hasPoster: true },\n  binary: {\n    posterBinary: {\n      data:     b64,\n      mimeType: 'image/png',\n      fileName: `poster_${eventId}_${submissionId}.png`,\n      fileType: 'png'\n    }\n  }\n};"
+      }
+    },
+
+    {
+      "id": "node-if-poster",
+      "name": "IF: Has Poster Binary",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2160, 300],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cond-poster",
+              "leftValue": "={{ $json.hasPoster }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equals" }
+            }
+          ]
+        }
+      }
+    },
+
+    {
+      "id": "node-log-openai-empty",
+      "name": "Sheets: Log OPENAI_EMPTY_OUTPUT",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [2380, 500],
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.SHEETS_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Log",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ $now.toISO() }}",
+            "Event ID": "={{ $json.eventId }}",
+            "Submission ID": "={{ $json.submissionId }}",
+            "Ten": "={{ $json.name }}",
+            "Email": "={{ $json.email }}",
+            "Truong": "={{ $json.university }}",
+            "Quoc gia": "={{ $json.country }}",
+            "Status": "FAILED",
+            "Email Sent": "FALSE",
+            "Error Code": "OPENAI_EMPTY_OUTPUT"
+          },
+          "matchingColumns": [],
+          "schema": []
+        }
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "google-sheets-cred",
+          "name": "Google Sheets"
+        }
+      }
+    },
+
+    {
+      "id": "node-upload-poster",
+      "name": "Drive: Upload Generated Poster",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [2380, 300],
+      "parameters": {
+        "operation": "upload",
+        "name": "=poster_{{ $json.eventId }}_{{ $json.submissionId }}_{{ $json.email }}.png",
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $env.DRIVE_GENERATED_FOLDER_ID }}",
+          "mode": "id"
+        },
+        "binaryPropertyName": "posterBinary",
+        "options": {}
+      },
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "google-drive-cred",
+          "name": "Google Drive"
+        }
+      }
+    },
+
+    {
+      "id": "node-sendgrid",
+      "name": "SendGrid: Send Email",
+      "type": "n8n-nodes-base.sendGrid",
+      "typeVersion": 1,
+      "position": [2600, 300],
+      "parameters": {
+        "fromEmail": "hello@ats.edu.vn",
+        "fromName": "ATS Education",
+        "toEmail": "={{ $json.email }}",
+        "subject": "=[ATS] Poster du học của {{ $json.name }} đã sẵn sàng",
+        "emailType": "html",
+        "message": "=<p>Xin chào {{ $json.name }},</p><p>{{ $json.congratsMessage }}</p><p>Poster của bạn đã được đính kèm trong email này. Bạn có thể tải về và chia sẻ lên mạng xã hội.</p><p>Trân trọng,<br/>ATS Education</p>",
+        "attachments": "=[ { \"content\": \"{{ $binary.posterBinary.data }}\", \"filename\": \"poster-{{ $json.name }}.png\", \"type\": \"image/png\", \"disposition\": \"attachment\" } ]",
+        "dynamicTemplateId": "",
+        "dynamicTemplateFields": {}
+      },
+      "credentials": {
+        "sendGridApi": {
+          "id": "sendgrid-cred",
+          "name": "SendGrid"
+        }
+      }
+    },
+
+    {
+      "id": "node-log-completed",
+      "name": "Sheets: Log COMPLETED",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [2820, 300],
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "={{ $env.SHEETS_ID }}",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Log",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ $now.toISO() }}",
+            "Event ID": "={{ $json.eventId }}",
+            "Submission ID": "={{ $json.submissionId }}",
+            "Ten": "={{ $json.name }}",
+            "Email": "={{ $json.email }}",
+            "Truong": "={{ $json.university }}",
+            "Quoc gia": "={{ $json.country }}",
+            "Status": "COMPLETED",
+            "Email Sent": "TRUE",
+            "Error Code": "",
+            "OpenAI Model": "gpt-image-1",
+            "Created At": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [],
+          "schema": []
+        }
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "google-sheets-cred",
+          "name": "Google Sheets"
+        }
+      }
+    }
+  ],
+
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code: Normalize + Build Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code: Normalize + Build Prompt": {
+      "main": [
+        [{ "node": "IF: Validate Required Fields", "type": "main", "index": 0 }]
+      ]
+    },
+    "IF: Validate Required Fields": {
+      "main": [
+        [{ "node": "Sheets: Check Duplicate", "type": "main", "index": 0 }],
+        [
+          {
+            "node": "Sheets: Log VALIDATION_FAILED",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheets: Check Duplicate": {
+      "main": [[{ "node": "Code: Is Duplicate?", "type": "main", "index": 0 }]]
+    },
+    "Code: Is Duplicate?": {
+      "main": [[{ "node": "IF: Is Duplicate", "type": "main", "index": 0 }]]
+    },
+    "IF: Is Duplicate": {
+      "main": [
+        [
+          {
+            "node": "Sheets: Log SKIPPED_DUPLICATE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [{ "node": "Drive: Upload Original Image", "type": "main", "index": 0 }]
+      ]
+    },
+    "Drive: Upload Original Image": {
+      "main": [
+        [{ "node": "HTTP: OpenAI Image Edit", "type": "main", "index": 0 }]
+      ]
+    },
+    "HTTP: OpenAI Image Edit": {
+      "main": [
+        [
+          {
+            "node": "Code: Convert Base64 to Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code: Convert Base64 to Binary": {
+      "main": [
+        [{ "node": "IF: Has Poster Binary", "type": "main", "index": 0 }]
+      ]
+    },
+    "IF: Has Poster Binary": {
+      "main": [
+        [
+          {
+            "node": "Drive: Upload Generated Poster",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Sheets: Log OPENAI_EMPTY_OUTPUT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Drive: Upload Generated Poster": {
+      "main": [[{ "node": "SendGrid: Send Email", "type": "main", "index": 0 }]]
+    },
+    "SendGrid: Send Email": {
+      "main": [
+        [{ "node": "Sheets: Log COMPLETED", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  },
+  "tags": ["ats", "predeparture", "poster"]
+}

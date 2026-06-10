@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>ATS Avenue to Success — Pre-departure Poster</title>
+    <style>
+      :root {
+        --navy: #003087;
+        --navy-deep: #00205b;
+        --navy-tint: #f3f6fc;
+        --gold: #ffb81c;
+        --gold-deep: #e6a100;
+        --ink: #1a2233;
+        --muted: #647089;
+        --line: #dde3ee;
+        --line-soft: #e9edf5;
+        --white: #ffffff;
+        --danger: #c0392b;
+        --danger-bg: #fdecea;
+        --ok: #1f8a4c;
+        --radius: 14px;
+        --shadow: 0 18px 50px -24px rgba(0, 32, 91, 0.55);
+        --font: Arial, "Helvetica Neue", Helvetica, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: var(--font);
+        color: var(--ink);
+        background: radial-gradient(
+          120% 60% at 50% -10%,
+          #00205b 0%,
+          #003087 42%,
+          #002a76 100%
+        );
+        background-attachment: fixed;
+        min-height: 100dvh;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        padding: max(env(safe-area-inset-top), 18px) 16px
+          max(env(safe-area-inset-bottom), 28px);
+      }
+
+      .shell {
+        max-width: 480px;
+        margin: 0 auto;
+      }
+
+      /* ---------- Brand header ---------- */
+      .brand {
+        text-align: center;
+        color: var(--white);
+        padding: 14px 8px 22px;
+      }
+      .brand__mark {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        font-size: 13px;
+        text-transform: uppercase;
+        color: var(--white);
+      }
+      .brand__mark::before,
+      .brand__mark::after {
+        content: "";
+        width: 26px;
+        height: 2px;
+        background: var(--gold);
+        border-radius: 2px;
+      }
+      .brand__diamond {
+        width: 9px;
+        height: 9px;
+        background: var(--gold);
+        transform: rotate(45deg);
+        margin: 0 2px;
+      }
+      .brand h1 {
+        margin: 16px 0 6px;
+        font-size: 26px;
+        line-height: 1.18;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        text-wrap: balance;
+      }
+      .brand h1 b {
+        color: var(--gold);
+        font-weight: 700;
+      }
+      .brand p {
+        margin: 0;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.78);
+        text-wrap: pretty;
+      }
+
+      /* ---------- Card ---------- */
+      .card {
+        background: var(--white);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+      .card__topline {
+        height: 5px;
+        background: linear-gradient(
+          90deg,
+          var(--gold) 0%,
+          var(--gold-deep) 100%
+        );
+      }
+      .card__body {
+        padding: 22px 20px 24px;
+      }
+
+      .form-intro {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--navy);
+        margin: 0 0 18px;
+      }
+      .form-intro::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--line);
+      }
+
+      /* ---------- Fields ---------- */
+      .field {
+        margin-bottom: 17px;
+      }
+
+      label.lbl {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 8px;
+        font-size: 13.5px;
+        font-weight: 700;
+        color: var(--ink);
+        margin-bottom: 7px;
+      }
+      .req {
+        color: var(--gold-deep);
+        font-weight: 700;
+      }
+      .opt {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .counter {
+        font-size: 11.5px;
+        font-weight: 400;
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      select,
+      textarea {
+        width: 100%;
+        font-family: var(--font);
+        font-size: 16px; /* prevents iOS zoom */
+        color: var(--ink);
+        background: var(--navy-tint);
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius);
+        padding: 13px 14px;
+        transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+      textarea {
+        resize: vertical;
+        min-height: 84px;
+        line-height: 1.45;
+      }
+      input::placeholder,
+      textarea::placeholder {
+        color: #9aa4b8;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--navy);
+        background: var(--white);
+        box-shadow: 0 0 0 4px rgba(0, 48, 135, 0.12);
+      }
+
+      .select-wrap {
+        position: relative;
+      }
+      .select-wrap::after {
+        content: "";
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        width: 9px;
+        height: 9px;
+        border-right: 2px solid var(--navy);
+        border-bottom: 2px solid var(--navy);
+        transform: translateY(-65%) rotate(45deg);
+        pointer-events: none;
+      }
+      select {
+        padding-right: 38px;
+        cursor: pointer;
+      }
+      select:invalid {
+        color: #9aa4b8;
+      }
+
+      /* ---------- File upload ---------- */
+      .file-input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .dropzone {
+        border: 1.5px dashed var(--navy);
+        background: var(--navy-tint);
+        border-radius: var(--radius);
+        padding: 22px 16px;
+        text-align: center;
+        cursor: pointer;
+        transition: background 0.15s, border-color 0.15s;
+        display: block;
+      }
+      .dropzone:active {
+        background: #e8eefb;
+      }
+      .dropzone__icon {
+        width: 42px;
+        height: 42px;
+        margin: 0 auto 10px;
+        border-radius: 50%;
+        background: var(--navy);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .dropzone__icon::before {
+        content: "";
+        width: 15px;
+        height: 15px;
+        border: 2.5px solid var(--gold);
+        border-bottom: none;
+        border-right: none;
+        transform: rotate(45deg) translate(2px, 2px);
+      }
+      .dropzone__icon::after {
+        content: "";
+        position: absolute;
+        width: 2.5px;
+        height: 18px;
+        background: var(--gold);
+        border-radius: 2px;
+        margin-top: -1px;
+      }
+      .dropzone strong {
+        color: var(--navy);
+        font-size: 14.5px;
+      }
+      .dropzone span {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 4px;
+      }
+
+      .preview {
+        display: none;
+        align-items: center;
+        gap: 13px;
+        padding: 11px;
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--white);
+      }
+      .preview.show {
+        display: flex;
+      }
+      .preview img {
+        width: 62px;
+        height: 62px;
+        object-fit: cover;
+        border-radius: 10px;
+        flex-shrink: 0;
+        background: var(--line-soft);
+      }
+      .preview__meta {
+        min-width: 0;
+        flex: 1;
+      }
+      .preview__name {
+        font-size: 13.5px;
+        font-weight: 700;
+        color: var(--ink);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .preview__size {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+      .preview__remove {
+        flex-shrink: 0;
+        border: none;
+        background: var(--navy-tint);
+        color: var(--navy);
+        font-weight: 700;
+        font-size: 13px;
+        padding: 8px 13px;
+        border-radius: 9px;
+        cursor: pointer;
+        font-family: var(--font);
+      }
+      .preview__remove:active {
+        background: #e1e8f7;
+      }
+
+      /* ---------- Consent ---------- */
+      .consent {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        background: var(--navy-tint);
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius);
+        padding: 14px;
+        cursor: pointer;
+      }
+      .consent input {
+        flex-shrink: 0;
+        width: 22px;
+        height: 22px;
+        margin: 1px 0 0;
+        accent-color: var(--navy);
+        cursor: pointer;
+      }
+      .consent__text {
+        font-size: 12.5px;
+        color: #45506a;
+        line-height: 1.55;
+      }
+
+      /* ---------- Errors ---------- */
+      .err {
+        display: none;
+        font-size: 12.5px;
+        color: var(--danger);
+        font-weight: 700;
+        margin-top: 6px;
+      }
+      .field.invalid .err {
+        display: block;
+      }
+      .field.invalid input,
+      .field.invalid select,
+      .field.invalid textarea,
+      .field.invalid .dropzone,
+      .field.invalid .consent {
+        border-color: var(--danger);
+        background: var(--danger-bg);
+      }
+
+      /* ---------- Submit ---------- */
+      .submit {
+        width: 100%;
+        margin-top: 8px;
+        font-family: var(--font);
+        font-size: 16.5px;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        color: var(--navy-deep);
+        background: linear-gradient(
+          180deg,
+          var(--gold) 0%,
+          var(--gold-deep) 100%
+        );
+        border: none;
+        border-radius: var(--radius);
+        padding: 16px;
+        cursor: pointer;
+        box-shadow: 0 10px 24px -10px rgba(255, 184, 28, 0.8);
+        transition: transform 0.1s, box-shadow 0.15s, opacity 0.15s;
+      }
+      .submit:active {
+        transform: translateY(1px);
+      }
+      .submit:disabled {
+        cursor: not-allowed;
+        opacity: 0.72;
+        background: linear-gradient(180deg, #c9cfdb, #b3bacb);
+        color: #fff;
+        box-shadow: none;
+      }
+      .submit__spin {
+        display: none;
+        width: 16px;
+        height: 16px;
+        border: 2.5px solid rgba(255, 255, 255, 0.5);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        vertical-align: -3px;
+        margin-right: 8px;
+      }
+      .submit.loading .submit__spin {
+        display: inline-block;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .form-error {
+        display: none;
+        margin-top: 14px;
+        background: var(--danger-bg);
+        border: 1.5px solid #f3c2bc;
+        border-radius: var(--radius);
+        padding: 13px 15px;
+        font-size: 13px;
+        color: var(--danger);
+      }
+      .form-error.show {
+        display: block;
+      }
+      .form-error b {
+        display: block;
+        margin-bottom: 2px;
+      }
+
+      .secure-note {
+        text-align: center;
+        font-size: 11.5px;
+        color: var(--muted);
+        margin: 16px 4px 0;
+        line-height: 1.5;
+      }
+
+      /* ---------- Thank you ---------- */
+      .thanks {
+        display: none;
+        text-align: center;
+        padding: 40px 24px 44px;
+      }
+      .thanks.show {
+        display: block;
+      }
+      .thanks__badge {
+        width: 76px;
+        height: 76px;
+        margin: 0 auto 22px;
+        border-radius: 50%;
+        background: rgba(31, 138, 76, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      .thanks__badge::after {
+        content: "";
+        width: 28px;
+        height: 15px;
+        border-left: 4px solid var(--ok);
+        border-bottom: 4px solid var(--ok);
+        transform: rotate(-45deg) translate(1px, -3px);
+        border-radius: 2px;
+      }
+      .thanks h2 {
+        margin: 0 0 10px;
+        font-size: 22px;
+        color: var(--navy);
+        font-weight: 700;
+      }
+      .thanks p {
+        margin: 0 auto;
+        max-width: 320px;
+        font-size: 14.5px;
+        color: #45506a;
+        line-height: 1.6;
+        text-wrap: pretty;
+      }
+      .thanks .spam {
+        margin-top: 16px;
+        font-size: 13px;
+        color: var(--muted);
+        background: var(--navy-tint);
+        border-radius: 12px;
+        padding: 12px 16px;
+        display: inline-block;
+      }
+
+      .footer {
+        text-align: center;
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 11.5px;
+        margin-top: 22px;
+        letter-spacing: 0.02em;
+      }
+
+      @media (max-width: 360px) {
+        .brand h1 {
+          font-size: 23px;
+        }
+        .card__body {
+          padding: 20px 16px 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="brand">
+        <div class="brand__mark">Avenue to Success 2026</div>
+        <h1>Pre-Departure <b>Poster</b></h1>
+        <p>
+          Điền thông tin &amp; tải ảnh lên — hệ thống sẽ tự tạo poster và gửi về
+          email của bạn.
+        </p>
+      </header>
+
+      <main class="card">
+        <div class="card__topline"></div>
+        <div class="card__body">
+          <!-- ============ FORM ============ -->
+          <form id="posterForm" novalidate>
+            <p class="form-intro">Thông tin của bạn</p>
+
+            <!-- Họ và tên -->
+            <div class="field" data-field="ten">
+              <label class="lbl" for="ten">
+                <span>Họ và tên <span class="req">*</span></span>
+                <span class="counter" data-counter="ten">0/80</span>
+              </label>
+              <input
+                type="text"
+                id="ten"
+                name="ten"
+                maxlength="80"
+                autocomplete="name"
+                placeholder="Nguyễn Văn A"
+                required
+              />
+              <p class="err">Vui lòng nhập họ và tên.</p>
+            </div>
+
+            <!-- Email -->
+            <div class="field" data-field="email">
+              <label class="lbl" for="email"
+                ><span>Email <span class="req">*</span></span></label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                autocomplete="email"
+                inputmode="email"
+                placeholder="ban@email.com"
+                required
+              />
+              <p class="err">Vui lòng nhập email hợp lệ.</p>
+            </div>
+
+            <!-- Trường đại học -->
+            <div class="field" data-field="truong">
+              <label class="lbl" for="truong">
+                <span>Trường đại học sẽ học <span class="req">*</span></span>
+                <span class="counter" data-counter="truong">0/120</span>
+              </label>
+              <input
+                type="text"
+                id="truong"
+                name="truong"
+                maxlength="120"
+                placeholder="University of Melbourne"
+                required
+              />
+              <p class="err">Vui lòng nhập tên trường.</p>
+            </div>
+
+            <!-- Quốc gia -->
+            <div class="field" data-field="quocgia">
+              <label class="lbl" for="quocgia"
+                ><span>Quốc gia <span class="req">*</span></span></label
+              >
+              <div class="select-wrap">
+                <select id="quocgia" name="quocgia" required>
+                  <option value="" disabled selected hidden>
+                    Chọn quốc gia…
+                  </option>
+                  <option value="Australia">Australia</option>
+                  <option value="Canada">Canada</option>
+                  <option value="United States">United States</option>
+                  <option value="United Kingdom">United Kingdom</option>
+                  <option value="New Zealand">New Zealand</option>
+                </select>
+              </div>
+              <p class="err">Vui lòng chọn quốc gia.</p>
+            </div>
+
+            <!-- Sở thích -->
+            <div class="field" data-field="soThich">
+              <label class="lbl" for="soThich">
+                <span
+                  >Sở thích / hoạt động <span class="opt">Tùy chọn</span></span
+                >
+                <span class="counter" data-counter="soThich">0/180</span>
+              </label>
+              <textarea
+                id="soThich"
+                name="soThich"
+                maxlength="180"
+                placeholder="Bóng đá, nhiếp ảnh, tình nguyện, du lịch…"
+              ></textarea>
+            </div>
+
+            <!-- Ảnh -->
+            <div class="field" data-field="anhCuaBan">
+              <label class="lbl"
+                ><span>Ảnh của bạn <span class="req">*</span></span></label
+              >
+              <label class="dropzone" id="dropzone" for="anhCuaBan">
+                <span class="dropzone__icon"></span>
+                <strong>Chạm để chọn ảnh</strong>
+                <span>JPEG, PNG hoặc WebP — tối đa 10MB</span>
+              </label>
+              <input
+                class="file-input"
+                type="file"
+                id="anhCuaBan"
+                name="anhCuaBan"
+                accept="image/jpeg,image/png,image/webp"
+                required
+              />
+              <div class="preview" id="preview">
+                <img id="previewImg" alt="Xem trước ảnh" />
+                <div class="preview__meta">
+                  <div class="preview__name" id="previewName"></div>
+                  <div class="preview__size" id="previewSize"></div>
+                </div>
+                <button type="button" class="preview__remove" id="removeImg">
+                  Đổi
+                </button>
+              </div>
+              <p class="err" id="fileErr">Vui lòng tải ảnh lên.</p>
+            </div>
+            <!-- Consent -->
+            <div class="field" data-field="consent">
+              <label class="consent" for="consent">
+                <input type="checkbox" id="consent" name="consent" required />
+                <span class="consent__text">
+                  Tôi đồng ý cho ATS Education sử dụng thông tin và ảnh tôi cung
+                  cấp để tạo poster pre-departure, gửi poster qua email, lưu trữ
+                  nội bộ phục vụ vận hành sự kiện và xử lý lại khi cần. Tôi hiểu
+                  ảnh và thông tin có thể được xử lý qua các dịch vụ bên thứ ba
+                  như OpenAI, Google Drive và SendGrid.
+                </span>
+              </label>
+              <p class="err">Vui lòng đồng ý với điều khoản để tiếp tục.</p>
+            </div>
+
+            <input
+              type="hidden"
+              name="eventId"
+              id="eventId"
+              value="predeparture-2026-hcm-01"
+            />
+            <input
+              type="hidden"
+              name="submissionId"
+              id="submissionId"
+              value=""
+            />
+
+            <button type="submit" class="submit" id="submitBtn">
+              <span class="submit__spin"></span
+              ><span id="submitLabel">Tạo poster của tôi</span>
+            </button>
+
+            <div class="form-error" id="formError">
+              <b>Gửi không thành công.</b>
+              <span id="formErrorMsg">Có lỗi xảy ra. Vui lòng thử lại.</span>
+            </div>
+
+            <p class="secure-note">
+              🔒 Thông tin của bạn chỉ dùng cho sự kiện pre-departure của ATS
+              Education.
+            </p>
+          </form>
+
+          <!-- ============ THANK YOU ============ -->
+          <div class="thanks" id="thanks">
+            <div class="thanks__badge"></div>
+            <h2>Poster của bạn đang được tạo!</h2>
+            <p>
+              Email sẽ đến trong khoảng <b>30–60 phút</b>. Cảm ơn bạn đã tham
+              gia sự kiện cùng ATS Education.
+            </p>
+            <div class="spam">
+              📩 Nhớ kiểm tra cả <b>Spam / Promotions</b> nhé.
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <p class="footer">ATS Education · Pre-departure 2026</p>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        var WEBHOOK_URL = "https://n8n.atsmarketingauto.com/webhook/predeparture";
+        var MAX_BYTES = 10 * 1024 * 1024;
+        var ALLOWED = ["image/jpeg", "image/png", "image/webp"];
+
+        var form = document.getElementById("posterForm");
+        var submitBtn = document.getElementById("submitBtn");
+        var submitLabel = document.getElementById("submitLabel");
+        var formError = document.getElementById("formError");
+        var formErrorMsg = document.getElementById("formErrorMsg");
+        var thanks = document.getElementById("thanks");
+
+        var fileInput = document.getElementById("anhCuaBan");
+        var dropzone = document.getElementById("dropzone");
+        var preview = document.getElementById("preview");
+        var previewImg = document.getElementById("previewImg");
+        var previewName = document.getElementById("previewName");
+        var previewSize = document.getElementById("previewSize");
+        var removeImg = document.getElementById("removeImg");
+        var fileErr = document.getElementById("fileErr");
+
+        var submitting = false;
+        var previewURL = null;
+
+        // ---- Submission ID ----
+        document.getElementById("submissionId").value =
+          window.crypto && crypto.randomUUID
+            ? crypto.randomUUID()
+            : "sub-" + Date.now() + "-" + Math.random().toString(16).slice(2);
+
+        // ---- Character counters ----
+        ["ten", "truong", "soThich"].forEach(function (id) {
+          var el = document.getElementById(id);
+          var counter = document.querySelector('[data-counter="' + id + '"]');
+          var max = el.getAttribute("maxlength");
+          function update() {
+            counter.textContent = el.value.length + "/" + max;
+          }
+          el.addEventListener("input", function () {
+            update();
+            clearError(id);
+          });
+          update();
+        });
+
+        ["email", "quocgia", "consent"].forEach(function (id) {
+          var el = document.getElementById(id);
+          var ev =
+            el.type === "checkbox" || el.tagName === "SELECT"
+              ? "change"
+              : "input";
+          el.addEventListener(ev, function () {
+            clearError(id);
+          });
+        });
+
+        // ---- Helpers ----
+        function fieldEl(name) {
+          return document.querySelector('[data-field="' + name + '"]');
+        }
+        function setError(name, msg) {
+          var f = fieldEl(name);
+          if (!f) return;
+          f.classList.add("invalid");
+          if (msg) {
+            var e = f.querySelector(".err");
+            if (e) e.textContent = msg;
+          }
+        }
+        function clearError(name) {
+          var f = fieldEl(name);
+          if (f) f.classList.remove("invalid");
+        }
+        function isEmail(v) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+        }
+        function fmtSize(bytes) {
+          if (bytes < 1024) return bytes + " B";
+          if (bytes < 1048576) return (bytes / 1024).toFixed(0) + " KB";
+          return (bytes / 1048576).toFixed(1) + " MB";
+        }
+
+        // ---- File handling ----
+        fileInput.addEventListener("change", function () {
+          clearError("anhCuaBan");
+          var file = fileInput.files && fileInput.files[0];
+          if (!file) {
+            resetPreview();
+            return;
+          }
+
+          if (ALLOWED.indexOf(file.type) === -1) {
+            fileErr.textContent =
+              "Định dạng không hợp lệ. Chỉ chấp nhận JPEG, PNG hoặc WebP.";
+            setError("anhCuaBan");
+            fileInput.value = "";
+            resetPreview();
+            return;
+          }
+          if (file.size > MAX_BYTES) {
+            fileErr.textContent =
+              "Ảnh quá lớn (" + fmtSize(file.size) + "). Tối đa 10MB.";
+            setError("anhCuaBan");
+            fileInput.value = "";
+            resetPreview();
+            return;
+          }
+
+          if (previewURL) URL.revokeObjectURL(previewURL);
+          previewURL = URL.createObjectURL(file);
+          previewImg.src = previewURL;
+          previewName.textContent = file.name;
+          previewSize.textContent = fmtSize(file.size);
+          preview.classList.add("show");
+          dropzone.style.display = "none";
+        });
+
+        function resetPreview() {
+          if (previewURL) {
+            URL.revokeObjectURL(previewURL);
+            previewURL = null;
+          }
+          previewImg.removeAttribute("src");
+          preview.classList.remove("show");
+          dropzone.style.display = "block";
+        }
+
+        removeImg.addEventListener("click", function () {
+          fileInput.value = "";
+          resetPreview();
+          fileInput.click();
+        });
+
+        // ---- Validation ----
+        function validate() {
+          var ok = true;
+          var firstBad = null;
+
+          var ten = document.getElementById("ten").value.trim();
+          if (!ten) {
+            setError("ten");
+            ok = false;
+            firstBad = firstBad || "ten";
+          }
+
+          var email = document.getElementById("email").value.trim();
+          if (!isEmail(email)) {
+            setError("email");
+            ok = false;
+            firstBad = firstBad || "email";
+          }
+
+          var truong = document.getElementById("truong").value.trim();
+          if (!truong) {
+            setError("truong");
+            ok = false;
+            firstBad = firstBad || "truong";
+          }
+
+          if (!document.getElementById("quocgia").value) {
+            setError("quocgia");
+            ok = false;
+            firstBad = firstBad || "quocgia";
+          }
+
+          var file = fileInput.files && fileInput.files[0];
+          if (!file) {
+            fileErr.textContent = "Vui lòng tải ảnh lên.";
+            setError("anhCuaBan");
+            ok = false;
+            firstBad = firstBad || "anhCuaBan";
+          }
+
+          if (!document.getElementById("consent").checked) {
+            setError("consent");
+            ok = false;
+            firstBad = firstBad || "consent";
+          }
+
+          if (firstBad) {
+            var f = fieldEl(firstBad);
+            if (f) {
+              try {
+                f.focus({ preventScroll: true });
+              } catch (e) {}
+              var top = f.getBoundingClientRect().top + window.pageYOffset - 90;
+              window.scrollTo({ top: top, behavior: "smooth" });
+            }
+          }
+          return ok;
+        }
+
+        // ---- Submit ----
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (submitting) return;
+
+          formError.classList.remove("show");
+          if (!validate()) return;
+
+          submitting = true;
+          submitBtn.disabled = true;
+          submitBtn.classList.add("loading");
+          submitLabel.textContent = "Đang tải ảnh lên…";
+
+          var data = new FormData();
+          data.append("ten", document.getElementById("ten").value.trim());
+          data.append("email", document.getElementById("email").value.trim());
+          data.append("truong", document.getElementById("truong").value.trim());
+          data.append("quocgia", document.getElementById("quocgia").value);
+          data.append(
+            "soThich",
+            document.getElementById("soThich").value.trim()
+          );
+          data.append("consent", "true");
+          data.append("eventId", document.getElementById("eventId").value);
+          data.append(
+            "submissionId",
+            document.getElementById("submissionId").value
+          );
+          data.append("anhCuaBan", fileInput.files[0]);
+
+          fetch(WEBHOOK_URL, { method: "POST", body: data })
+            .then(function (res) {
+              if (res.status === 202 || res.ok) {
+                showThanks();
+              } else {
+                fail(
+                  "Máy chủ trả về lỗi (" + res.status + "). Vui lòng thử lại."
+                );
+              }
+            })
+            .catch(function () {
+              fail("Không kết nối được tới máy chủ. Kiểm tra mạng và thử lại.");
+            });
+        });
+
+        function fail(msg) {
+          submitting = false;
+          submitBtn.disabled = false;
+          submitBtn.classList.remove("loading");
+          submitLabel.textContent = "Thử lại";
+          formErrorMsg.textContent = msg;
+          formError.classList.add("show");
+          var top =
+            formError.getBoundingClientRect().top + window.pageYOffset - 120;
+          window.scrollTo({ top: top, behavior: "smooth" });
+        }
+
+        function showThanks() {
+          form.style.display = "none";
+          thanks.classList.add("show");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      })();
+    </script>
+  </body>
+</html>
