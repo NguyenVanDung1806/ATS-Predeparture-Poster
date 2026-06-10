@@ -131,7 +131,7 @@
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "={{ $env.SHEETS_ID }}",
+          "value": "17qDRUMehf5PoNwl1tBMHDI22ny0pa4CT7PjmxBMmkmE",
           "mode": "id"
         },
         "sheetName": {
@@ -176,7 +176,7 @@
         "operation": "read",
         "documentId": {
           "__rl": true,
-          "value": "={{ $env.SHEETS_ID }}",
+          "value": "17qDRUMehf5PoNwl1tBMHDI22ny0pa4CT7PjmxBMmkmE",
           "mode": "id"
         },
         "sheetName": {
@@ -252,7 +252,7 @@
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "={{ $env.SHEETS_ID }}",
+          "value": "17qDRUMehf5PoNwl1tBMHDI22ny0pa4CT7PjmxBMmkmE",
           "mode": "id"
         },
         "sheetName": {
@@ -294,7 +294,7 @@
         "name": "=original_{{ $json.eventId }}_{{ $json.submissionId }}_{{ $json.email }}.jpg",
         "folderId": {
           "__rl": true,
-          "value": "={{ $env.DRIVE_ORIGINALS_FOLDER_ID }}",
+          "value": "1GNoji0t_7iKlt49Edch3VccGCF5DKFh0",
           "mode": "id"
         },
         "binaryPropertyName": "anhCuaBan",
@@ -403,7 +403,7 @@
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "={{ $env.SHEETS_ID }}",
+          "value": "17qDRUMehf5PoNwl1tBMHDI22ny0pa4CT7PjmxBMmkmE",
           "mode": "id"
         },
         "sheetName": {
@@ -448,7 +448,7 @@
         "name": "=poster_{{ $json.eventId }}_{{ $json.submissionId }}_{{ $json.email }}.png",
         "folderId": {
           "__rl": true,
-          "value": "={{ $env.DRIVE_GENERATED_FOLDER_ID }}",
+          "value": "1Xnr2x24WNq7S8o_4FrKR2rcU4vFvhDGP",
           "mode": "id"
         },
         "binaryPropertyName": "posterBinary",
@@ -497,7 +497,7 @@
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "={{ $env.SHEETS_ID }}",
+          "value": "17qDRUMehf5PoNwl1tBMHDI22ny0pa4CT7PjmxBMmkmE",
           "mode": "id"
         },
         "sheetName": {
