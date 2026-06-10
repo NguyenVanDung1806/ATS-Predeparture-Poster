@@ -458,7 +458,7 @@
         "name": "=poster_{{ $json.eventId }}_{{ $json.submissionId }}_{{ $json.email }}.png",
         "folderId": {
           "__rl": true,
-          "value": "1Xnr2x24WNq7S8o_4FrKR2rcU4vFvhDGP",
+          "value": "1wsMA0b1SjVWvDjP8VH6KMOoAG9CDopRg",
           "mode": "id"
         },
         "inputDataFieldName": "posterBinary",
@@ -593,7 +593,13 @@
     },
     "Drive: Upload Original Image": {
       "main": [
-        [{ "node": "Code: Restore Binary After Drive", "type": "main", "index": 0 }]
+        [
+          {
+            "node": "Code: Restore Binary After Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Code: Restore Binary After Drive": {
